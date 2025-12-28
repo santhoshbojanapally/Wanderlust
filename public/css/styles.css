@@ -20,6 +20,14 @@ body {
   color: #222222;
 }
 
+.hide {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+
 /* footer */
 
 footer {
@@ -70,7 +78,6 @@ footer {
 /* boiler-plate */
 
 .container {
-  width: 100%;
   padding: 20px;
   flex: 1;
 }
@@ -78,7 +85,6 @@ footer {
 /* cards */
 
 .listing-card {
-  padding-left: 1rem;
   border: none;
   border-radius: 8px;
 }
@@ -89,7 +95,7 @@ footer {
 
 .card-img-top {
   height: 15rem;
-  width: 15rem;
+  width: 100%;
   border-radius: 8px;
   margin-bottom: 12px;
 }
@@ -140,4 +146,109 @@ footer {
 .listing-edit-btn a {
   text-decoration: none;
   color: white;
+}
+
+/* Map */
+
+#map {
+  height: 350px;
+  width: 60vh;
+}
+
+/* listing category */
+
+.multi-select {
+  position: relative;
+  display: inline-block;
+  margin-top: 23px;
+}
+
+#msBtn {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: white;
+}
+
+.ms-menu {
+  display: none;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  min-width: 220px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  z-index: 999;
+}
+
+.ms-menu label {
+  display: block;
+  padding: 6px 4px;
+  cursor: pointer;
+}
+.ms-menu input {
+  margin-right: 8px;
+}
+.ms-menu.show {
+  display: block;
+}
+
+/* Category */
+#filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+#filters a {
+  text-decoration: none;
+  color: black;
+}
+.filter {
+  text-align: center;
+  opacity: 0.65;
+  margin: 1rem;
+  transition: all 0.2s;
+}
+.filter:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+.filter img {
+  height: 22px;
+}
+.filter > p {
+  font-size: small;
+}
+.tax-info {
+  display: none;
+}
+.tax-button {
+  border: 1px solid rgb(172, 172, 172);
+  padding: 15px;
+  height: 3.25rem;
+  border-radius: 15px;
+}
+#menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+/* nolisting */
+
+.nolisting {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+}
+
+/* Apply Tax */
+
+.tax-info {
+  display: "hidden";
 }

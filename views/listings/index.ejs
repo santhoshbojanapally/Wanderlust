@@ -1,8 +1,116 @@
-<%layout("../layouts/boilerplate.ejs") %>
-<body>
-  <h2>All Listings</h2>
+<% layout("layouts/boilerplate") %>
+<body class="main-container">
+  <div id="menu">
+    <div id="filters">
+      <a href="/listings/category/Trending">
+        <div class="filter">
+          <div>
+            <i class="fa-solid fa-fire"></i>
+          </div>
+          <p>Trending</p>
+        </div>
+      </a>
+      <a href="/listings/category/Rooms">
+        <div class="filter">
+          <div>
+            <img src="/assets/bed.png" alt="" />
+          </div>
+          <p>Rooms</p>
+        </div>
+      </a>
+      <a href="/listings/category/Farms">
+        <div class="filter">
+          <div>
+            <img src="/assets/countryside.png" alt="" />
+          </div>
+          <p>Farms</p>
+        </div>
+      </a>
+      <a href="/listings/category/Iconic">
+        <div class="filter">
+          <div>
+            <img src="/assets/pisa.png" alt="" />
+          </div>
+          <p>Iconic cities</p>
+        </div>
+      </a>
+      <a href="/listings/category/Mountains">
+        <div class="filter">
+          <div><i class="fa-solid fa-mountain-sun"></i></div>
+          <p>Mountains</p>
+        </div>
+      </a>
+      <a href="/listings/category/OMG!">
+        <div class="filter">
+          <div>
+            <i class="fa-regular fa-face-surprise"></i>
+          </div>
+          <p>OMG!</p>
+        </div>
+      </a>
+      <a href="/listings/category/Amazing">
+        <div class="filter">
+          <div>
+            <i class="fa-solid fa-person-swimming"></i>
+          </div>
+          <p>Amazing pools!</p>
+        </div>
+      </a>
+      <a href="/listings/category/Beach">
+        <div class="filter">
+          <div>
+            <img src="/assets/chair.png" alt="" />
+          </div>
+          <p>Beach</p>
+        </div>
+      </a>
+      <a href="/listings/category/Camping">
+        <div class="filter">
+          <div>
+            <img src="/assets/tent-2.png" alt="" />
+          </div>
+          <p>Camping</p>
+        </div>
+      </a>
+      <a href="/listings/category/Arctic">
+        <div class="filter">
+          <div>
+            <img src="/assets/snowflake.png" alt="" />
+          </div>
+          <p>Arcitc</p>
+        </div> </a
+      ><a href="/listings/category/Arctic">
+        <div class="filter">
+          <div>
+            <img src="/assets/snowflake.png" alt="" />
+          </div>
+          <p>Arcitc</p>
+        </div>
+      </a>
+      <a href="/listings/category/Arctic">
+        <div class="filter">
+          <div>
+            <img src="/assets/boat.png" alt="" />
+          </div>
+          <p>Boats</p>
+        </div>
+      </a>
+    </div>
+    <div class="tax-button">
+      <div class="form-check form-switch form-check-reverse">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="switchCheckReverse"
+        />
+        <label class="form-check-label" for="switchCheckReverse">
+          Display total after taxes
+        </label>
+      </div>
+    </div>
+  </div>
   <div
-    class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-xsm-2 box-class"
+    class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-xsm-1 box-class"
   >
     <%for(let listing of data){%>
     <a href="/listings/<%=listing._id%>" class="listing-link">
@@ -16,13 +124,27 @@
         <div class="card-body">
           <h5 class="card-title"><%=listing.title%></h5>
           <p class="card-price">
-            &#8377; <%=listing.price.toLocaleString("en-IN")%> / night
+            &#8377; <%=listing.price.toLocaleString("en-IN")%> / night &nbsp;
+            &nbsp;&nbsp; <i class="hide tax-info">+18% tax</i>
           </p>
         </div>
       </div>
     </a>
     <%}%>
   </div>
+  <script>
+    let inputElement = document.getElementById("switchCheckReverse");
+    let taxInfo = document.getElementsByClassName("tax-info");
+    inputElement.addEventListener("click", () => {
+      for (let element of taxInfo) {
+        if (element.style.display != "inline-block") {
+          element.style.display = "inline-block";
+        } else {
+          element.style.display = "none";
+        }
+      }
+    });
+  </script>
   <!-- <ul class="container">
     <%for(let listing of data){%>
     <li>

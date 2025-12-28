@@ -1,4 +1,4 @@
-<%layout("../layouts/boilerplate.ejs") -%>
+<% layout("layouts/boilerplate") -%>
 
 <!--  -->
 <!-- -->
@@ -10,7 +10,8 @@
         <form
           action="/listings/new"
           method="post"
-          class="form needs-validation"
+          class="form needs-validation mt-3"
+          enctype="multipart/form-data"
           novalidate
         >
           <div class="mb-3">
@@ -37,26 +38,108 @@
             <div class="valid-feedback">Description Looks good!</div>
             <div class="invalid-feedback">Please enter a Description</div>
           </div>
-          <div class="mb-3">
-            <label for="image" class="form-label"
-              >Enter the link of the image:
-            </label>
-            <input
-              type="text"
-              name="listing[image]"
-              class="form-control"
-              required
-            />
-            <div class="valid-feedback">Image Looks good!</div>
-            <div class="invalid-feedback">
-              Please enter a valid link for Image
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="image" class="form-label"
+                >Please upload the image:
+              </label>
+              <input
+                type="file"
+                name="listing[image]"
+                class="form-control"
+                required
+              />
+              <div class="valid-feedback">Image Looks good!</div>
+              <div class="invalid-feedback">
+                Please upload a valid link for Image
+              </div>
             </div>
+            <div class="multi-select col-md-6">
+              <button type="button" id="msBtn">Select the Category ▾</button>
+
+              <div class="ms-menu" id="msMenu">
+                <label
+                  ><input
+                    type="checkbox"
+                    name="listing[category][]"
+                    value="Trending"
+                  />
+                  Trending</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    name="listing[category][]"
+                    value="Rooms"
+                  />
+                  Rooms</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    name="listing[category][]"
+                    value="Farms"
+                  />
+                  Farms</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    name="listing[category][]"
+                    value="Iconic cities"
+                  />
+                  Iconic cities</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    name="listing[category][]"
+                    value="Mountains"
+                  />
+                  Mountains</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    name="listing[category][]"
+                    value="OMG!"
+                  />
+                  OMG!</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    name="listing[category][]"
+                    value="Amazing pools!"
+                  />
+                  Amazing pools!</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    name="listing[category][]"
+                    value="Camping"
+                  />
+                  Camping</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    name="listing[category][]"
+                    value="Arctic"
+                  />
+                  Arctic</label
+                >
+              </div>
+            </div>
+            <div class="valid-feedback">Category Looks good!</div>
+            <div class="invalid-feedback">Category should be selected</div>
           </div>
           <div class="row mb-3">
             <div class="col-md-4">
               <label for="price" class="form-label">Enter the price: </label>
               <input
-                type="text"
+                type="number"
                 name="listing[price]"
                 class="form-control"
                 required
@@ -92,6 +175,7 @@
             <div class="valid-feedback">Location Looks good!</div>
             <div class="invalid-feedback">Location should be valid</div>
           </div>
+
           <button class="btn add-listing" id="btn">Add</button>
         </form>
       </div>
