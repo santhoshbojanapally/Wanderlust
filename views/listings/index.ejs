@@ -82,9 +82,9 @@
       ><a href="/listings/category/Arctic">
         <div class="filter">
           <div>
-            <img src="/assets/snowflake.png" alt="" />
+            <img src="/assets/AirBallon.png" alt="" />
           </div>
-          <p>Arcitc</p>
+          <p>AirBallon</p>
         </div>
       </a>
       <a href="/listings/category/Arctic">
@@ -124,8 +124,11 @@
         <div class="card-body">
           <h5 class="card-title"><%=listing.title%></h5>
           <p class="card-price">
-            &#8377; <%=listing.price.toLocaleString("en-IN")%> / night &nbsp;
-            &nbsp;&nbsp; <i class="hide tax-info">+18% tax</i>
+            <div class="d-flex align-items-center">
+              <img style="height: 20px;" src="/assets/dollar.png" alt="USD">
+              <%=listing.price.toLocaleString("en-IN")%> / night &nbsp;&nbsp;&nbsp; 
+              <i class="hide tax-info">+18% tax</i>
+            </div>
           </p>
         </div>
       </div>

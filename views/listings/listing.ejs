@@ -14,7 +14,13 @@
     <div class="card-body mb-3">
       <p>Owned by <%=listing.owner.username%></p>
       <p><%=listing.description%></p>
-      <p>&#8377;<%=listing.price.toLocaleString("en-IN")%></p>
+      <div class="d-flex align-items-center mb-3">
+        <img
+          style="height: 20px"
+          src="/assets/dollar.png"
+          alt="USD"
+        />&nbsp;&nbsp;&nbsp; <%=listing.price.toLocaleString("en-IN")%> / night
+      </div>
       <p id="location"><%=listing.location%></p>
       <p id="country"><%=listing.country%></p>
       <%if(currUser&&currUser._id.equals(listing.owner._id)){%>
@@ -124,7 +130,7 @@
             </p>
             <p class="card-text"><%=review.comment%></p>
           </div>
-
+          <%if(review.author.username===currUser.username){%>
           <form
             action="/listings/<%=listing.id%>/review/<%=review.id%>?_method=delete"
             method="post"
@@ -132,6 +138,7 @@
           >
             <button type="submit" class="btn btn-sm btn-dark">Delete</button>
           </form>
+          <%}%>
         </div>
         <%}%>
       </div>

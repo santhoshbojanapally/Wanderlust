@@ -64,12 +64,9 @@ app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   res.locals.CurrUser = req.user;
+  console.log(req.user);
   next();
 });
-
-// app.get("/", (req, res) => {
-//   res.send("Home Route");
-// });
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id", reviewsRouter);

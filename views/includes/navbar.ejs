@@ -63,7 +63,31 @@
         <a class="nav-link" href="/signup"><b>SignUp</b></a>
         <a class="nav-link" href="/login"><b>Sign In</b></a>
         <%}%> <%if(CurrUser){%>
-        <a class="nav-link" href="/logout"><b>Logout</b></a>
+        <div class="dropdown">
+          <button
+            class="btn d-flex align-items-center justify-content-center dropdown-toggle dd-btn"
+            type="button"
+            id="dropdownMenu2"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <div class="user-tray">
+              <img src="/assets/user.png" alt="" />
+              <%=CurrUser.username%>
+            </div>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdown-menu-end">
+            <button class="dropdown-item" type="button">
+              Change User name
+            </button>
+            <button class="dropdown-item" type="button">
+              Change Email Address
+            </button>
+            <button class="dropdown-item" type="button">Verify Account</button>
+            <a class="dropdown-item nav-link" href="/logout"><b>Logout</b></a>
+          </ul>
+        </div>
         <%}%>
       </div>
     </div>

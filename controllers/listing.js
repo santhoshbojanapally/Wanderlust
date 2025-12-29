@@ -28,7 +28,11 @@ module.exports.showSearchResults = async (req, res, next) => {
   console.log(req.body);
   let listings = await Listing.find({ title: req.body.query });
   for (listing of listings) console.log(listings);
-  res.send("Search results!!");
+  if (listings.length > 0) {
+    res.render("listings/index.ejs", { data: listings });
+    return;
+  }
+  res.render("noListingFound.ejs");
 };
 
 module.exports.showListing = async (req, res, next) => {
@@ -93,6 +97,20 @@ module.exports.editListing = async (req, res, next) => {
 module.exports.updateListing = async (req, res, next) => {
   let { listing } = req.body;
   let { id } = req.params;
+  let newLocation = listing.location + " " + listing.country;
+  try {
+    let response = await opencage.geocode({ q: `${newLocation}` });
+    let geometry = {
+      type: "Point",
+      coordinates: [
+        `${response.results[0].geometry.lat}`,
+        `${response.results[0].geometry.lng}`,
+      ],
+    };
+    listing.geometry = geometry;
+  } catch (err) {
+    console.log("Something broke on our side!!");
+  }
   let changedListing = await Listing.findByIdAndUpdate(
     { _id: id },
     {
@@ -100,6 +118,7 @@ module.exports.updateListing = async (req, res, next) => {
       description: listing.description,
       price: listing.price,
       location: listing.location,
+      geometry: listing.geometry,
       country: listing.country,
     },
     { runValidators: true, new: true }
