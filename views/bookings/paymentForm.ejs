@@ -1,0 +1,202 @@
+<% layout("layouts/boilerplate") -%>
+<div class="d-flex gap-5 justify-content-center align-items-start">
+  <div
+    id="container"
+    class="d-flex flex-column justify-content-center"
+    style="width: 50rem"
+  >
+    <div class="title d-flex align-items-center mb-4 gap-3">
+      <i
+        class="fa-solid fa-arrow-left d-flex align-items-center justify-content-center"
+        style="
+          background-color: rgb(234, 232, 232);
+          border: none;
+          border-radius: 50%;
+          height: 40px;
+          width: 40px;
+        "
+      ></i>
+      <h2>Confirm and pay</h2>
+    </div>
+    <div id="whentopay" class="d-flex justify-content-center">
+      <form
+        class="border-0 shadow mb-5 bg-white"
+        style="border-radius: 2rem; gap: 0.4rem; width: 100%; padding: 4rem"
+        action="/listings/paymentElection/<%=listing._id%>"
+      >
+        <h4>1. Choose when to pay</h4>
+        <div
+          class="d-flex gap-4 align-items-center justify-content-between p-2"
+        >
+          <label for="payNow" style="font-size: large"
+            >Pay $ &nbsp; <%=listing.price * reservation.totalDays%> &nbsp;
+            now!</label
+          >
+          <input
+            class="form-check-input"
+            type="radio"
+            name="paymentElection"
+            value="payNow"
+            id=""
+          />
+        </div>
+        <hr />
+        <div
+          class="d-flex justify-content-between align-items-center p-2 gap-4"
+        >
+          <label for="payLater" style="font-size: large"
+            >Pay &nbsp; $0 &nbsp; now! <br />
+            <p style="color: rgb(58, 57, 57); font-size: small">
+              $ &nbsp; <%=listing.price * reservation.totalDays%> will be
+              charged after your stay. No extra fees
+            </p>
+          </label>
+          <input
+            class="form-check-input"
+            type="radio"
+            name="paymentElection"
+            value="payLater"
+            id="payLater"
+          />
+        </div>
+        <hr />
+        <a class="list-group-item list-group-item-action" href="#card-details">
+          <button
+            class="btn btn-dark"
+            style="padding: 1rem 3rem 1rem; border-radius: 0.5rem"
+            type="button"
+          >
+            Next
+          </button>
+        </a>
+      </form>
+    </div>
+    <!-- views/partials/cardForm.ejs -->
+    <div
+      data-spy="scroll"
+      data-target="#list-example"
+      data-offset="0"
+      class="border-0 d-flex flex-column justify-content-center shadow mb-5 bg-white"
+      id="card-details"
+      style="border-radius: 2rem; gap: 1rem; width: 100%; padding: 4rem"
+    >
+      <h2>Enter Payment Details</h2>
+      <form
+        id="payment-form"
+        action="/listings/makepayment/<%=listing._id%>"
+        method="post"
+        class="d-flex gap-3 flex-column"
+      >
+        <input
+          style="display: none"
+          type="text"
+          name="reservationId"
+          value="<%=reservation._id%>"
+        />
+        <label for="cardholder-name">Cardholder Name</label>
+        <input
+          type="text"
+          id="cardholder-name"
+          name="cardDetails[holderName]"
+          placeholder="Name on card"
+          required
+        />
+
+        <label for="card-number">Card Number</label>
+        <input
+          type="text"
+          id="card-number"
+          name="cardDetails[number]"
+          placeholder="Valid card number"
+          required
+          minlength="16"
+          maxlength="19"
+        />
+
+        <div class="form-row d-flex flex-column gap-3">
+          <div class="form-group">
+            <label for="expiry-date">Expiry Date</label>
+            <input type="text" id="expiry-date" placeholder="MM/YY" required />
+          </div>
+          <div class="form-group">
+            <label for="cvv">CVV</label>
+            <input
+              type="text"
+              id="cvv"
+              name="cardDetails[CVV]"
+              placeholder="CVV"
+              required
+              minlength="3"
+              maxlength="4"
+            />
+          </div>
+          <div class="form-group">
+            <label for="Country">Country/region</label>
+            <input type="text" name="cardDetails[country]" />
+          </div>
+        </div>
+
+        <!-- You can use an EJS conditional to show different options if needed -->
+        <% if (locals.showDebitCreditToggle) { %>
+        <div class="card-type-toggle">
+          <input
+            type="radio"
+            id="credit"
+            name="card-type"
+            value="credit"
+            checked
+          />
+          <label for="credit">Credit Card</label>
+          <input type="radio" id="debit" name="card-type" value="debit" />
+          <label for="debit">Debit Card</label>
+        </div>
+        <% } %>
+
+        <button
+          type="submit"
+          class="btn btn-dark"
+          style="padding: 1rem 3rem 1rem; border-radius: 0.5rem"
+        >
+          Pay Now
+        </button>
+      </form>
+    </div>
+  </div>
+  <div
+    class="listing-details mb-5 bg-white w-50"
+    style="
+      border: 1px solid rgb(179, 179, 179);
+      border-radius: 2rem;
+      gap: 1rem;
+      padding: 2rem;
+      margin-top: 2.1rem;
+    "
+  >
+    <div class="d-flex gap-4">
+      <img
+        style="width: 100px"
+        src="<%=listing.image.url%>"
+        alt="airbnb_Image"
+      />
+      <h4><%=listing.title%></h4>
+    </div>
+    <hr />
+    <div>
+      Dates
+      <br />
+      <p>from <%=reservation.checkIn%> to <%=reservation.checkOut%></p>
+    </div>
+    <hr />
+    <div>
+      Guests: <%=reservation.guestsCount%>
+      <br />
+      <%=reservation.childrenCount%> Children<br />
+      <%=reservation.adultsCount%> Adult
+    </div>
+    <hr />
+    <div>
+      Price details: $ &nbsp;<%=listing.price%> × <%=reservation.totalDays%>
+      (days)
+    </div>
+  </div>
+</div>

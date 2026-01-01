@@ -4,6 +4,7 @@ const { ref } = require("joi");
 const Schema = mongoose.Schema;
 const Review = require("./reviews.js");
 const User = require("./user.js");
+const Booking = require("./booking.js");
 const ExpressError = require("../utils/ExpressError.js");
 
 const listingSchema = new Schema({
@@ -79,6 +80,10 @@ const listingSchema = new Schema({
       "Camping",
       "Arctic",
     ],
+  },
+  availability: {
+    type: Schema.Types.ObjectId,
+    ref: "Booking",
   },
 });
 

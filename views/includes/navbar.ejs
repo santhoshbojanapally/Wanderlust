@@ -78,14 +78,17 @@
             </div>
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdown-menu-end">
-            <button class="dropdown-item" type="button">
+            <a href="/changeUsername/<%=CurrUser._id%>" class="dropdown-item">
               Change User name
-            </button>
-            <button class="dropdown-item" type="button">
+            </a>
+            <a href="/changeEmail/<%=CurrUser._id%>" class="dropdown-item">
               Change Email Address
+            </a>
+            <a class="dropdown-item">Verify Account</a>
+            <a class="dropdown-item"> Your reservations </a>
+            <button class="dropdown-item">
+              <a href="/logout" class="nav-link"><b>Logout</b></a>
             </button>
-            <button class="dropdown-item" type="button">Verify Account</button>
-            <a class="dropdown-item nav-link" href="/logout"><b>Logout</b></a>
           </ul>
         </div>
         <%}%>

@@ -149,6 +149,13 @@ footer {
   margin-bottom: 20px;
 }
 
+.reserveBtn {
+  padding: 8px 30px 8px 30px;
+  border: none;
+  color: white;
+  background-color: #fe424d;
+}
+
 /* Edit Page */
 
 .edit-btn {

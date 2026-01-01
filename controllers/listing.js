@@ -1,5 +1,7 @@
+const Booking = require("../models/booking.js");
 const Listing = require("../models/listing.js");
 const opencage = require("opencage-api-client");
+var DateDiff = require("date-diff").default;
 
 module.exports.index = async (req, res, next) => {
   let data = await Listing.find({});
@@ -18,8 +20,7 @@ module.exports.showListingsByCategory = async (req, res, next) => {
   let data = await Listing.find({ category: `${id}` });
   // console.log(data);
   if (data.length > 0) {
-    res.render("listings/index.ejs", { data });
-    return;
+    return res.render("listings/index.ejs", { data });
   }
   res.render("noListing.ejs");
 };
@@ -29,8 +30,7 @@ module.exports.showSearchResults = async (req, res, next) => {
   let listings = await Listing.find({ title: req.body.query });
   for (listing of listings) console.log(listings);
   if (listings.length > 0) {
-    res.render("listings/index.ejs", { data: listings });
-    return;
+    return res.render("listings/index.ejs", { data: listings });
   }
   res.render("noListingFound.ejs");
 };
@@ -151,4 +151,51 @@ module.exports.destroyListing = async (req, res, next) => {
   // console.log("listing deleted!!");
   req.flash("success", "Listing Deleted!!");
   res.redirect("/listings");
+};
+
+module.exports.renderReservationForm = async (req, res, next) => {
+  let { id } = req.params;
+  let listing = await Listing.findById(id)
+    .populate("owner")
+    .populate({ path: "reviews", populate: { path: "author" } });
+  res.render("listings/reserveListing.ejs", { listing });
+};
+
+module.exports.renderPaymentForm = async (req, res, next) => {
+  let { id } = req.params;
+  let listing = await Listing.findById(id);
+  let { reservation } = req.body;
+  const date1 = new Date(reservation.checkIn); // 2015-12-1
+  const date2 = new Date(reservation.checkOut); // 2014-01-1
+
+  const diff = new DateDiff(date2, date1);
+  reservation.totalDays = diff.days();
+  reservation.listingId = id;
+  reservation.guestId = res.locals.CurrUser._id;
+  reservation.hostId = listing.owner._id;
+  reservation.pricePerNight = listing.price;
+  reservation.total = listing.price;
+  reservation.paymentProvider = "stripe";
+  reservation.paymentStatus = "PROCESSING";
+  let newBooking = new Booking(reservation);
+  newBooking.save();
+  reservation._id = newBooking._id;
+  res.render("bookings/paymentForm.ejs", { listing, reservation });
+};
+
+module.exports.makePayment = async (req, res, next) => {
+  let { id } = req.params;
+  let { reservationId, cardDetails } = req.body;
+  console.log("From make Payment: ");
+  console.log("Listing ID: ", id);
+  console.log("reservation ID: ", reservationId);
+  console.log("card Details: ", cardDetails);
+  res.render("bookings/bookingSuccess.ejs");
+};
+
+module.exports.reserveListing = async (req, res, next) => {
+  let { id } = req.params;
+  let listing = await Listing.findById(id);
+
+  res.render("bookings/bookingSuccess.ejs");
 };

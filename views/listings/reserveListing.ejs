@@ -1,0 +1,435 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+  .sticky-top-offset {
+    top: 24px;
+  }
+  .icon-box {
+    width: 34px;
+    height: 34px;
+  }
+  .thumb {
+    width: 48px;
+    height: 48px;
+  }
+  .hero-img {
+    height: 420px;
+    object-fit: cover;
+  }
+  @media (max-width: 991.98px) {
+    .hero-img {
+      height: 260px;
+    }
+  }
+</style>
+
+<main class="container py-4">
+  <div class="mb-3">
+    <h2 class="fw-semibold mb-1"><%=listing.title%></h2>
+
+    <div class="d-flex flex-wrap align-items-center gap-2 text-muted">
+      <a class="link-dark fw-semibold text-decoration-underline" href="#reviews"
+        ><%=listing.reviews.length%> reviews</a
+      >
+    </div>
+  </div>
+
+  <!-- Image carousel -->
+  <div
+    id="listingCarousel"
+    class="carousel slide mb-4"
+    data-bs-ride="carousel"
+    data-bs-interval="3000"
+  >
+    <div class="carousel-indicators">
+      <button
+        type="button"
+        data-bs-target="#listingCarousel"
+        data-bs-slide-to="0"
+        class="active"
+        aria-current="true"
+        aria-label="Slide 1"
+      ></button>
+      <button
+        type="button"
+        data-bs-target="#listingCarousel"
+        data-bs-slide-to="1"
+        aria-label="Slide 2"
+      ></button>
+      <button
+        type="button"
+        data-bs-target="#listingCarousel"
+        data-bs-slide-to="2"
+        aria-label="Slide 3"
+      ></button>
+    </div>
+
+    <div class="carousel-inner rounded-4 overflow-hidden border">
+      <div class="carousel-item active">
+        <img
+          src="<%=listing.image.url%>"
+          class="d-block w-100 hero-img"
+          alt="Listing image 1"
+        />
+      </div>
+      <div class="carousel-item">
+        <img
+          src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1600&auto=format&fit=crop"
+          class="d-block w-100 hero-img"
+          alt="Listing image 2"
+        />
+      </div>
+      <div class="carousel-item">
+        <img
+          src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1600&auto=format&fit=crop"
+          class="d-block w-100 hero-img"
+          alt="Listing image 3"
+        />
+      </div>
+    </div>
+
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#listingCarousel"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#listingCarousel"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <!-- Two-column layout -->
+  <div class="row g-4">
+    <!-- LEFT -->
+    <div class="col-lg-7">
+      <!-- Host row -->
+      <div class="d-flex align-items-center gap-3">
+        <div class="rounded-circle bg-secondary-subtle thumb"></div>
+        <div>
+          <div class="fw-semibold">Hosted by <%=listing.owner.username%></div>
+          <div class="text-muted small">Superhost</div>
+        </div>
+      </div>
+
+      <hr class="my-4" />
+
+      <!-- Feature list -->
+      <div class="d-flex flex-column gap-4">
+        <div class="d-flex gap-3">
+          <div class="bg-body-secondary rounded icon-box"></div>
+          <div>
+            <div class="fw-semibold">Self check-in</div>
+            <div class="text-muted small">
+              Check yourself in with the keypad.
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex gap-3">
+          <div class="bg-body-secondary rounded icon-box"></div>
+          <div>
+            <div class="fw-semibold">Great location</div>
+            <div class="text-muted small">
+              95% of recent guests gave the location a 5-star rating.
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex gap-3">
+          <div class="bg-body-secondary rounded icon-box"></div>
+          <div>
+            <div class="fw-semibold">Free cancellation</div>
+            <div class="text-muted small">
+              Cancel before check-in for a full refund.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-4" />
+
+      <!-- Description -->
+      <h5 class="fw-semibold mb-2">About this place</h5>
+      <p class="text-muted mb-0"><%=listing.description%></p>
+
+      <hr class="my-4" />
+
+      <!-- Reviews anchor -->
+      <h5 id="reviews" class="fw-semibold mb-2">Reviews</h5>
+      <%for(let review of listing.reviews){%>
+      <div class="border rounded-4 p-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <div class="fw-semibold">Average</div>
+            <div class="text-muted small">
+              Guests consistently rate this home highly.
+            </div>
+          </div>
+          <button class="btn btn-outline-dark rounded-3">Read all</button>
+        </div>
+      </div>
+      <%}%>
+    </div>
+
+    <!-- RIGHT: Reserve card -->
+    <div class="col-lg-5">
+      <div
+        class="card shadow-sm border rounded-4 p-4 position-sticky sticky-top-offset"
+      >
+        <form
+          action="/listings/reserve/<%=listing._id%>"
+          method="post"
+          class="needs-validation"
+          novalidate
+        >
+          <div class="form-row d-flex gap-5">
+            <div class="col-md-4 mb-3">
+              <label
+                for="checkin"
+                class="text-uppercase small fw-semibold text-muted"
+                >Checkin</label
+              >
+              <input
+                type="date"
+                class="form-control mt-2 p-2 fw-semibold bg-transparent"
+                style="box-shadow: none"
+                id="checkin"
+                name="reservation[checkIn]"
+                placeholder="Enter Date"
+                required
+              />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">
+                Please enter a valid checkin Date
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label
+                for="checkout"
+                class="text-uppercase small fw-semibold text-muted"
+                >Checkout</label
+              >
+              <input
+                type="date"
+                class="form-control mt-2 p-2 fw-semibold bg-transparent"
+                style="box-shadow: none"
+                id="checkout"
+                name="reservation[checkOut]"
+                placeholder="Enter Date"
+                required
+              />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">
+                Please enter a valid checkout Date
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="form-row col-md-4 mb-3">
+            <div class="p-3">
+              <div class="text-uppercase small fw-semibold text-muted">
+                Guests
+              </div>
+
+              <div class="dropdown">
+                <button
+                  class="btn w-100 text-start p-0 border-0 bg-transparent"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  data-bs-auto-close="outside"
+                  aria-expanded="false"
+                  id="guestsBtn"
+                >
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="fw-semibold" id="guestsLabel">
+                      <span id="guestsCount" name="reservation[guestsCount]"
+                        >0</span
+                      >&nbsp;&nbsp; guests
+                    </div>
+                    <span class="text-muted">▾</span>
+                  </div>
+                </button>
+
+                <div
+                  class="dropdown-menu p-3 shadow-sm rounded-4"
+                  style="width: 320px"
+                >
+                  <!-- Adults -->
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-3"
+                  >
+                    <div>
+                      <div class="fw-semibold">Adults</div>
+                      <div class="text-muted small">Ages 13+</div>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                      <button
+                        class="btn btn-outline-dark btn-sm rounded-circle px-2"
+                        type="button"
+                        id="adultsMinus"
+                      >
+                        −
+                      </button>
+                      <span
+                        class="fw-semibold"
+                        style="min-width: 18px; text-align: center"
+                        id="adultsCount"
+                        name="reservation[adultsCount]"
+                        >0</span
+                      >
+                      <button
+                        class="btn btn-outline-dark btn-sm rounded-circle px-2"
+                        type="button"
+                        id="adultsPlus"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Children -->
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-3"
+                  >
+                    <div>
+                      <div class="fw-semibold">Children</div>
+                      <div class="text-muted small">Ages 2–12</div>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                      <button
+                        class="btn btn-outline-dark btn-sm rounded-circle px-2"
+                        type="button"
+                        id="childrenMinus"
+                      >
+                        −
+                      </button>
+                      <span
+                        class="fw-semibold"
+                        style="min-width: 18px; text-align: center"
+                        id="childrenCount"
+                        name="reservation[childrenCount]"
+                        >0</span
+                      >
+                      <button
+                        class="btn btn-outline-dark btn-sm rounded-circle px-2"
+                        type="button"
+                        id="childrenPlus"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  <div
+                    class="d-flex justify-content-between align-items-center pt-2 border-top"
+                  >
+                    <button
+                      class="btn btn-link p-0 text-decoration-underline link-dark"
+                      type="button"
+                      id="clearGuests"
+                    >
+                      Clear
+                    </button>
+                    <button
+                      class="btn btn-dark btn-sm rounded-3"
+                      type="button"
+                      id="closeGuests"
+                    >
+                      Close
+                    </button>
+                  </div>
+
+                  <!-- Hidden inputs (so you can submit later) -->
+                  <input
+                    type="hidden"
+                    name="reservation[adultsCount]"
+                    id="adultsInput"
+                    value="0"
+                  />
+                  <input
+                    type="hidden"
+                    name="reservation[childrenCount]"
+                    id="childrenInput"
+                    value="0"
+                  />
+                  <input
+                    type="hidden"
+                    name="reservation[guestsCount]"
+                    id="guestsTotalInput"
+                    value="0"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button
+            class="btn btn-danger w-100 py-3 fw-semibold rounded-3"
+            type="submit"
+          >
+            Reserve
+          </button>
+        </form>
+
+        <hr class="my-4" />
+
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-decoration-underline"
+            >$<%=listing.price%> × 2 nights</span
+          >
+          <span>$<%=listing.price*2%></span>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-decoration-underline">Cleaning fee</span>
+          <span>$45</span>
+        </div>
+        <div class="d-flex justify-content-between mb-3">
+          <span class="text-decoration-underline">Service fee</span>
+          <span>$38</span>
+        </div>
+
+        <div class="d-flex justify-content-between fw-semibold pt-3 border-top">
+          <span>Total before taxes</span>
+          <span>$<%=listing.price*2+45+38%></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+  let(function () {
+    "use strict";
+    window.addEventListener(
+      "load",
+      function () {
+        var forms = document.getElementsByClassName("needs-validation");
+        var validation = Array.prototype.filter.call(forms, function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      },
+      false
+    );
+  })();
+</script>

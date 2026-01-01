@@ -5,7 +5,12 @@ const Listing = require("../models/listing.js");
 const Review = require("../models/reviews.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { listingSchema, reviewSchema } = require("../Schema.js");
-const { validateUser, isOwner, saveRedirectUrl } = require("../middleware.js");
+const {
+  validateUser,
+  isOwner,
+  saveRedirectUrl,
+  checkConflict,
+} = require("../middleware.js");
 const listingController = require("../controllers/listing.js");
 const multer = require("multer");
 const { storage } = require("../cloudConfig.js");
@@ -13,7 +18,7 @@ const upload = multer({ storage: storage });
 
 const validateListing = (req, res, next) => {
   let result = listingSchema.validate(req.body);
-  console.dir(result);
+  // console.dir(result);
   if (result.error) {
     console.log("ERROR!!");
     next(new ExpressError(400, error.message));
@@ -40,6 +45,8 @@ router
 
 router.route("/search").post(WrapAsync(listingController.showSearchResults));
 
+router.route("/makePayment/:id").post(WrapAsync(listingController.makePayment));
+
 router
   .route("/:id")
   .get(WrapAsync(listingController.showListing))
@@ -53,6 +60,15 @@ router
     isOwner,
     upload.single("listing[image]"),
     WrapAsync(listingController.updateListing)
+  );
+
+router
+  .route("/reserve/:id")
+  .get(WrapAsync(listingController.renderReservationForm))
+  .post(
+    validateUser,
+    checkConflict,
+    WrapAsync(listingController.renderPaymentForm)
   );
 
 module.exports = router;

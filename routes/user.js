@@ -22,7 +22,14 @@ Router.route("/login")
     WrapAsync(userController.login)
   );
 
-// Logout
 Router.get("/logout", userController.logout);
+
+Router.route("/changeUsername/:id")
+  .get(userController.renderUsernameForm)
+  .post(userController.updateUserName);
+
+Router.route("/changeEmail/:id")
+  .get(userController.renderEmailForm)
+  .post(WrapAsync(userController.updateEmail));
 
 module.exports = Router;

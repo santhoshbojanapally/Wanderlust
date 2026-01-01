@@ -23,8 +23,8 @@
       </div>
       <p id="location"><%=listing.location%></p>
       <p id="country"><%=listing.country%></p>
-      <%if(currUser&&currUser._id.equals(listing.owner._id)){%>
       <div class="d-flex justify-content-start align-items-center gap-2">
+        <%if(currUser&&currUser._id.equals(listing.owner._id)){%>
         <form
           action="/listings/<%= listing._id %>?_method=delete"
           method="post"
@@ -34,10 +34,14 @@
         </form>
 
         <a href="/listings/<%= listing._id %>/edit" class="btn btn-danger"
-          >Edit Listing</a
-        >
+          >Edit Listing
+        </a>
+        <%}%>
+
+        <a href="/listings/reserve/<%=listing._id%>" class="btn reserveBtn">
+          Reserve
+        </a>
       </div>
-      <%}%>
     </div>
     <div>
       <form
@@ -130,7 +134,7 @@
             </p>
             <p class="card-text"><%=review.comment%></p>
           </div>
-          <%if(review.author.username===currUser.username){%>
+          <%if(currUser&&review.author.username===currUser.username){%>
           <form
             action="/listings/<%=listing.id%>/review/<%=review.id%>?_method=delete"
             method="post"

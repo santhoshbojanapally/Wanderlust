@@ -3,8 +3,8 @@ if (mapDiv) {
   let lng = mapDiv.getAttribute("lng");
   let lat = mapDiv.getAttribute("lat");
   let title = mapDiv.getAttribute("locationName");
-  console.log("Longitude: ", lng);
-  console.log("Lattitude: ", lat);
+  // console.log("Longitude: ", lng);
+  // console.log("Lattitude: ", lat);
 
   var myIcon = L.icon({
     iconUrl: "../assets/compass.png",
