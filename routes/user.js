@@ -19,7 +19,7 @@ Router.route("/login")
       failureRedirect: "/login",
       failureFlash: true,
     }),
-    WrapAsync(userController.login)
+    WrapAsync(userController.login),
   );
 
 Router.get("/logout", userController.logout);

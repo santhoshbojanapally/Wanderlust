@@ -189,20 +189,19 @@
         <form
           action="/listings/reserve/<%=listing._id%>"
           method="post"
-          class="needs-validation"
+          class="form needs-validation mt-3"
           novalidate
         >
           <div class="form-row d-flex gap-5">
             <div class="col-md-4 mb-3">
               <label
                 for="checkin"
-                class="text-uppercase small fw-semibold text-muted"
+                class="form-label text-uppercase small fw-semibold text-muted"
                 >Checkin</label
               >
               <input
                 type="date"
                 class="form-control mt-2 p-2 fw-semibold bg-transparent"
-                style="box-shadow: none"
                 id="checkin"
                 name="reservation[checkIn]"
                 placeholder="Enter Date"
@@ -216,7 +215,7 @@
             <div class="col-md-4 mb-3">
               <label
                 for="checkout"
-                class="text-uppercase small fw-semibold text-muted"
+                class="form-label text-uppercase small fw-semibold text-muted"
                 >Checkout</label
               >
               <input
@@ -409,7 +408,26 @@
   </div>
 </main>
 <script>
-  let(function () {
+    (() => {
+    "use strict";
+
+    const forms = document.querySelectorAll(".needs-validation");
+
+    Array.from(forms).forEach((form) => {
+      form.addEventListener(
+        "submit",
+        (event) => {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
+  // let(function () {
     "use strict";
     window.addEventListener(
       "load",
