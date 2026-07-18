@@ -14,7 +14,7 @@ const {
   validateUser,
   isReviewAuthor,
   saveRedirectUrl,
-} = require("../middleware.js");
+} = require("../middlewares.js");
 
 const reviewValidate = (req, res, next) => {
   let result = reviewSchema.validate(req.body);
@@ -31,7 +31,7 @@ router.post(
   "/reviews",
   validateUser,
   reviewValidate,
-  WrapAsync(reviewController.createReview)
+  WrapAsync(reviewController.createReview),
 );
 
 // DELETE Review Route
@@ -41,7 +41,7 @@ router.delete(
   validateUser,
   saveRedirectUrl,
   isReviewAuthor,
-  WrapAsync(reviewController.destroyReview)
+  WrapAsync(reviewController.destroyReview),
 );
 
 module.exports = router;

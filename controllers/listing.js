@@ -184,10 +184,40 @@ module.exports.renderPaymentForm = async (req, res, next) => {
     reservation.total = listing.price;
     reservation.paymentProvider = "stripe";
     reservation.paymentStatus = "PROCESSING";
+    return res.render("bookings/paymentForm.ejs", { listing, reservation });
+  }
+
+  req.flash(
+    "error",
+    "You must enter guests and a valid check In and check Out date!",
+  );
+  res.redirect(`/listings/reserve/${id}`);
+};
+module.exports.confirmBooking = async (req, res, next) => {
+  let { id } = req.params;
+  let listing = await Listing.findById(id);
+  let { reservation } = req.body;
+  if (
+    reservation.checkIn &&
+    reservation.checkOut &&
+    reservation.adultsCount > 0 &&
+    (reservation.childrenCount > 0 || reservation.guestsCount > 0)
+  ) {
+    const date1 = new Date(reservation.checkIn); // 2015-12-1
+    const date2 = new Date(reservation.checkOut); // 2014-01-1
+
+    const diff = new DateDiff(date2, date1);
+    reservation.totalDays = diff.days();
+    reservation.listingId = id;
+    reservation.guestId = res.locals.CurrUser._id;
+    reservation.hostId = listing.owner._id;
+    reservation.pricePerNight = listing.price;
+    reservation.total = listing.price;
+    reservation.paymentProvider = "stripe";
+    reservation.paymentStatus = "PROCESSING";
     let newBooking = new Booking(reservation);
     newBooking.save();
     reservation._id = newBooking._id;
-    return res.render("bookings/paymentForm.ejs", { listing, reservation });
   }
   req.flash(
     "error",

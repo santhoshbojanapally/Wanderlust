@@ -6,16 +6,19 @@
     style="width: 50rem"
   >
     <div class="title d-flex align-items-center mb-4 gap-3">
-      <i
-        class="fa-solid fa-arrow-left d-flex align-items-center justify-content-center"
-        style="
-          background-color: rgb(234, 232, 232);
-          border: none;
-          border-radius: 50%;
-          height: 40px;
-          width: 40px;
-        "
-      ></i>
+      
+      <a href="/listings/reserve/<%=listing._id%>" style="text-decoration: none; color: transparent;">
+        <i class="fa-solid fa-arrow-left d-flex align-items-center justify-content-center"
+          style="
+            background-color: rgb(234, 232, 232);
+            border: none;
+            color: rgb(70, 70, 70);
+            border-radius: 50%;
+            height: 40px;
+            width: 40px;
+          ">
+        </i>
+      </a>
       <h2>Confirm and pay</h2>
     </div>
     <div id="whentopay" class="d-flex justify-content-center">

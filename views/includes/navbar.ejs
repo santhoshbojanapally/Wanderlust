@@ -20,11 +20,12 @@
   }
 </style>
 
-<nav class="navbar navbar-expand-lg bg-body-light border-bottom sticky-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-body-light border-bottom sticky-top " >
+
   <div class="container-fluid">
-    <a class="navbar-brand" href="/listings"
-      ><i class="fa-regular fa-compass"></i
-    ></a>
+    <a class="navbar-brand" href="/listings">
+      <img style="width: 50px; display: flex; align-content: center;" src="/assets/Logo2.png" alt="">
+    </a>
     <button
       class="navbar-toggler"
       type="button"
@@ -73,7 +74,7 @@
             aria-expanded="false"
           >
             <div class="user-tray">
-              <img src="/assets/user.png" alt="" />
+              <i class="fa-solid fa-user"></i>
               <%=CurrUser.username%>
             </div>
           </button>

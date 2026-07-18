@@ -10,7 +10,7 @@ const {
   isOwner,
   saveRedirectUrl,
   checkConflict,
-} = require("../middleware.js");
+} = require("../middlewares.js");
 const listingController = require("../controllers/listing.js");
 const multer = require("multer");
 const { storage } = require("../cloudConfig.js");
@@ -37,7 +37,7 @@ router
     validateUser,
     validateListing,
     upload.single("listing[image]"),
-    WrapAsync(listingController.createListing)
+    WrapAsync(listingController.createListing),
   );
 router
   .route("/category/:c_id")
@@ -59,7 +59,7 @@ router
     validateUser,
     isOwner,
     upload.single("listing[image]"),
-    WrapAsync(listingController.updateListing)
+    WrapAsync(listingController.updateListing),
   );
 
 router
@@ -68,7 +68,7 @@ router
   .post(
     validateUser,
     checkConflict,
-    WrapAsync(listingController.renderPaymentForm)
+    WrapAsync(listingController.renderPaymentForm),
   );
 
 module.exports = router;

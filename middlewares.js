@@ -1,7 +1,3 @@
-const Booking = require("./models/booking");
-const Listing = require("./models/listing");
-const Review = require("./models/reviews");
-
 const validateUser = (req, res, next) => {
   if (!req.isAuthenticated()) {
     req.session.redirectUrl = req.originalUrl;
