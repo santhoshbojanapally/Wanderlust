@@ -17,7 +17,27 @@
   .search-inp {
     border-radius: 2rem;
     padding: 0.5rem 2rem 0.5rem 2rem;
+  }@media (max-width: 768px) {
+  .navbar-collapse {
+    background-color: white; 
+    
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    right: 0;
+    
+    z-index: 9999; 
+    
+    padding: 1rem;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1); 
+    border-radius: 0 0 10px 10px; 
   }
+
+  /* Ensure the main navbar container is relative so the absolute positioning above works */
+  .navbar {
+    position: relative;
+  }
+}
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-body-light border-bottom sticky-top " >
